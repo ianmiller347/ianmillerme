@@ -1,0 +1,47 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-slide infinite 10s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #999;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-slide {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(2rem) rotate(0deg);
+  }
+  40% {
+    transform: translateX(3rem) rotate(0deg);
+  }
+  50% {
+    transform: translateX(4rem) rotate(180deg);
+  }
+  75% {
+    transform: translateX(2rem) rotate(180deg);
+  }
+  90% {
+    transform: translateX(1rem) rotate(180deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0);
+  }
+}

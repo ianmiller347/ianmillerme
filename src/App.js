@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import AsyncApp from './containers/AsyncApp';
+import Footer from './components/Footer';
 import './App.css';
 
 class App extends Component {
@@ -14,6 +16,8 @@ class App extends Component {
         <p className="App-intro">
           I am Ian.
         </p>
+        <AsyncApp />
+        <Footer />
       </div>
     );
   }

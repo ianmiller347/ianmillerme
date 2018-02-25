@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Post from './Post';
+import PostListItem from './PostListItem';
+
  
 const PostList = ({ posts, onPostClick }) => (
   <ul>
     {posts.map((post, index) => (
-      <Post key={index} {...post} onClick={() => onPostClick(index)} />
+      <PostListItem key={index} {...post} onClick={() => onPostClick(post.slug)} />
     ))}
   </ul>
 );
@@ -14,8 +15,13 @@ PostList.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      active: PropTypes.bool.isRequired,
-      text: PropTypes.string.isRequired
+      title: PropTypes.shape({
+        rendered: PropTypes.string
+      }).isRequired,
+      content: PropTypes.shape({
+        rendered: PropTypes.string
+      }).isRequired,
+      slug: PropTypes.string.isRequired
     }).isRequired
   ).isRequired,
   onPostClick: PropTypes.func.isRequired

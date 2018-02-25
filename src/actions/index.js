@@ -5,14 +5,14 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const SELECT_POST = 'SELECT_POST';
 export const INVALIDATE_POST = 'INVALIDATE_POST';
  
-export function selectPosturl(posturl) {
+export function selectPost(posturl) {
   return {
     type: SELECT_POST,
     posturl
   };
 }
  
-export function invalidatePosturl(posturl) {
+export function invalidatePost(posturl) {
   return {
     type: INVALIDATE_POST,
     posturl
@@ -27,25 +27,32 @@ function requestPosts(posturl) {
 }
  
 function receivePosts(posturl, json) {
+  console.log('receivePosts', json)
   return {
     type: RECEIVE_POSTS,
     posturl,
-    posts: json.data.children.map(child => child.data),
+    posts: json.map(child => child),
     receivedAt: Date.now()
   };
 }
  
 function fetchPosts(posturl) {
+  // fetch(`https://ianmiller.me/wp-json/${posturl}.json`)
+  // //ianmiller.me/wp-json/wp/v2/posts
   return dispatch => {
     dispatch(requestPosts(posturl))
-    return fetch(`https://ianmiller.me/wp-json/${posturl}.json`)
-      .then(response => response.json())
+    return fetch(`//ianmiller.me/wp-json/wp/v2/posts`)
+      .then(response => {
+        console.log('response', response);
+        return response.json();
+      })
       .then(json => dispatch(receivePosts(posturl, json)))
+      .catch(error => console.log('error', error))
   };
 }
  
 function shouldFetchPosts(state, posturl) {
-  const posts = state.postsByPosturl[posturl];
+  const posts = state.postsByUrl[posturl];
   if (!posts) {
     return true;
   }
