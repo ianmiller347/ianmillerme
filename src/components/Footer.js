@@ -1,6 +1,7 @@
 import React from 'react';
+import '../styles/Footer.css';
 
-const PostListItem = () => (
+const Footer = () => (
   <footer className='app-footer'>
     <p>Made with react, redux, and the WP API.</p>
     <p>Check out the source on <a href='https://github.com/ianmiller347/ianmillerme' title='ianmiller.me on github'>GitHub</a>.</p>
@@ -8,4 +9,4 @@ const PostListItem = () => (
   </footer>
 );
  
-export default PostListItem;
+export default Footer;

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PostListItem from './PostListItem';
-
+import '../styles/Post.css';
  
 const PostList = ({ posts, onPostClick }) => (
-  <ul>
+  <ul className='post-list'>
     {posts.map((post, index) => (
       <PostListItem key={index} {...post} onClick={() => onPostClick(post.slug)} />
     ))}
@@ -19,6 +19,9 @@ PostList.propTypes = {
         rendered: PropTypes.string
       }).isRequired,
       content: PropTypes.shape({
+        rendered: PropTypes.string
+      }).isRequired,
+      excerpt: PropTypes.shape({
         rendered: PropTypes.string
       }).isRequired,
       slug: PropTypes.string.isRequired

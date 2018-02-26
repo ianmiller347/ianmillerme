@@ -43,8 +43,7 @@ class AsyncApp extends Component {
     const {
       selectedPost,
       posts,
-      isFetching,
-      lastUpdated
+      isFetching
     } = this.props;
 
     return (

@@ -1,0 +1,14 @@
+ul.post-list {
+  margin: 0;
+  padding: 0;
+}
+
+li.post-list-item {
+  margin: 1rem;
+  padding: 1rem;
+  list-style: none;
+  box-shadow: 2px 4px 3px #ccc;
+  text-align: left;
+  background-color: #fefefe;
+  border-radius: 3px;
+}
