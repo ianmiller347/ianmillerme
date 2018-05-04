@@ -8,12 +8,10 @@ import {
 } from '../actions';
 import PostList from '../components/PostList';
 import Loader from '../components/Loader';
+import Main from '../layout/Main';
+import Sidebar from '../layout/Sidebar';
  
 class AsyncApp extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { dispatch, selectedPost } = this.props;
     dispatch(fetchPostsIfNeeded(selectedPost));
@@ -47,20 +45,15 @@ class AsyncApp extends Component {
     } = this.props;
 
     return (
-      <section className='posts-section'>
-        {this._renderPosts(isFetching, posts)}
+      <section className='main-section grid grid--has-sidebar'>
+        <Sidebar widgets={[]} />
+        <Main
+          selectedPost={selectedPost}
+          posts={posts}
+          isFetching={isFetching}
+        />
       </section>
-    )
-  }
-
-  _renderPosts(isFetching, posts) {
-    if (isFetching) {
-      return <Loader />;
-    }
-    else if (posts && posts.length > 0) {
-      return <PostList posts={posts} onPostClick={this.handlePostClick} />;
-    }
-    return <p>There are no posts right now.</p>;
+    );
   }
 }
 
