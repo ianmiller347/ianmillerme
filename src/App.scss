@@ -2,6 +2,11 @@
 
 .App {
   text-align: center;
+  max-width: 100%;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 100%;
 }
 
 .App-logo {
@@ -20,9 +25,10 @@
   font-size: 1.5em;
 }
 
-.App-intro {
-  font-size: large;
-}
+//
+// .main-section {
+//   min-height: 80vh;
+// }
 
 @keyframes App-logo-slide {
   0% {

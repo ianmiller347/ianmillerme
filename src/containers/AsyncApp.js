@@ -46,12 +46,13 @@ class AsyncApp extends Component {
 
     return (
       <section className='main-section grid grid--has-sidebar'>
-        <Sidebar widgets={[]} />
         <Main
           selectedPost={selectedPost}
           posts={posts}
           isFetching={isFetching}
+          onPostClick={this.handlePostClick}
         />
+        <Sidebar widgets={[]} />
       </section>
     );
   }

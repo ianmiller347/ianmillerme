@@ -15,7 +15,7 @@ class Main extends Component {
       <main className='main-section'>
         {this._renderPosts(isFetching, posts)}
       </main>
-    )
+    );
   }
 
   _renderPosts(isFetching, posts) {
@@ -23,7 +23,7 @@ class Main extends Component {
       return <Loader />;
     }
     else if (posts && posts.length > 0) {
-      return <PostList posts={posts} onPostClick={this.handlePostClick} />;
+      return <PostList posts={posts} onPostClick={this.props.onPostClick} />;
     }
     return <p>There are no posts right now.</p>;
   }

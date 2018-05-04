@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Loader from '../components/Loader';
+import Navigation from './Navigation';
  
 class Sidebar extends Component {
   render() {
@@ -10,10 +11,7 @@ class Sidebar extends Component {
 
     return (
       <aside className='sidebar'>
-        <h4>Sidebar stuff</h4>
-        <ul>
-          <li>Sidebar widget</li>
-        </ul>
+        <Navigation />
       </aside>
     );
   }
