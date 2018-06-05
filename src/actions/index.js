@@ -4,6 +4,11 @@ export const REQUEST_POSTS = 'REQUEST_POSTS';
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const SELECT_POST = 'SELECT_POST';
 export const INVALIDATE_POST = 'INVALIDATE_POST';
+export const REQUEST_PAGES = 'REQUEST_PAGES';
+export const RECEIVE_PAGES = 'RECEIVE_PAGES';
+
+const pagesEndPoint = `//ianmiller.me/wp-json/wp/v2/pages`;
+const postsEndPoint = `//ianmiller.me/wp-json/wp/v2/posts`;
  
 export function selectPost(posturl) {
   return {
@@ -27,7 +32,6 @@ function requestPosts(posturl) {
 }
  
 function receivePosts(posturl, json) {
-  console.log('receivePosts', json)
   return {
     type: RECEIVE_POSTS,
     posturl,
@@ -37,15 +41,10 @@ function receivePosts(posturl, json) {
 }
  
 function fetchPosts(posturl) {
-  // fetch(`https://ianmiller.me/wp-json/${posturl}.json`)
-  // //ianmiller.me/wp-json/wp/v2/posts
   return dispatch => {
     dispatch(requestPosts(posturl))
-    return fetch(`//ianmiller.me/wp-json/wp/v2/posts`)
-      .then(response => {
-        console.log('response', response);
-        return response.json();
-      })
+    return fetch(postsEndPoint)
+      .then(response => response.json())
       .then(json => dispatch(receivePosts(posturl, json)))
       .catch(error => console.log('error', error))
   };
@@ -59,15 +58,59 @@ function shouldFetchPosts(state, posturl) {
   else if (posts.isFetching) {
     return false;
   }
-  else {
-    return posts.didInvalidate;
-  }
+  return posts.didInvalidate;
 }
  
 export function fetchPostsIfNeeded(posturl) {
   return (dispatch, getState) => {
     if (shouldFetchPosts(getState(), posturl)) {
       return dispatch(fetchPosts(posturl));
+    }
+  };
+}
+
+// pages
+function requestPages(pageurl) {
+  return {
+    type: REQUEST_PAGES,
+    pageurl
+  };
+}
+ 
+function receivePages(pageurl, json) {
+  return {
+    type: RECEIVE_PAGES,
+    pageurl,
+    pages: json.map(child => child),
+    receivedAt: Date.now()
+  };
+}
+ 
+function fetchPages(pageurl) {
+  return dispatch => {
+    dispatch(requestPages(pageurl))
+    return fetch(pagesEndPoint)
+      .then(response => response.json())
+      .then(json => dispatch(receivePages(pageurl, json)))
+      .catch(error => console.log('error', error))
+  };
+}
+ 
+function shouldFetchPages(state, pageurl) {
+  const pages = state.pages[pageurl];
+  if (!pages) {
+    return true;
+  }
+  else if (pages.isFetching) {
+    return false;
+  }
+  return true;
+}
+ 
+export function fetchPagesIfNeeded(pageurl) {
+  return (dispatch, getState) => {
+    if (shouldFetchPages(getState(), pageurl)) {
+      return dispatch(fetchPages(pageurl));
     }
   };
 }

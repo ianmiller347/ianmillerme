@@ -1,26 +1,69 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom';
 import AsyncApp from './containers/AsyncApp';
+import Header from './components/Header';
 import Footer from './components/Footer';
+import fetchPagesIfNeeded from '../actions';
 import './App.css';
 
 class App extends Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchPagesIfNeeded());
+  }
+
+  buildRoutes(pages) {
+    return pages.map(page => (
+      <Route
+        key={page.slug}
+        component={ AsyncApp }
+        path={`/${page.slug}`}
+        exact
+      />
+    ));
+  }
 
   render() {
+    const { pages, isFetching } = this.props;
+    if (isFetching) {
+      return <Loader />;
+    }
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Ian J. Miller</h1>
-          <p className="App-intro">
-            I've written code before
-          </p>
-        </header>
-        <AsyncApp />
+        <Header pages={pages} />
+        <Router>
+          <Switch>
+            {this.buildRoutes(pages)}
+            <Route render={() => { return <Redirect to="/" /> }} />
+          </Switch>
+        </Router>
         <Footer />
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  const stateFromProps = {
+    pages: [],
+    isFetching: false
+  };
+
+  if (state.pages && state.pages.isFetching != null) {
+    stateFromProps.isFetching = state.pages.isFetching;
+  }
+
+  if (state.pages && state.pages.items && state.pages.items.length > 0) {
+    stateFromProps.pages = state.pages.items;
+  }
+
+  return stateFromProps;
+}
+
+export default connect(mapStateToProps)(App);
