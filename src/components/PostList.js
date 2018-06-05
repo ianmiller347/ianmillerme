@@ -4,11 +4,14 @@ import PostListItem from './PostListItem';
 import '../styles/Post.css';
  
 const PostList = ({ posts, onPostClick }) => (
-  <ul className='post-list'>
-    {posts.map((post, index) => (
-      <PostListItem key={index} {...post} onClick={() => onPostClick(post.slug)} />
-    ))}
-  </ul>
+  <div className='post-list-container'>
+    <h3>Some Blog Posts</h3>
+    <ul className='post-list'>
+      {posts.map((post, index) => (
+        <PostListItem key={index} {...post} onClick={() => onPostClick(post.slug)} />
+      ))}
+    </ul>
+  </div>
 );
  
 PostList.propTypes = {

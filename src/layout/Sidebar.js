@@ -6,12 +6,13 @@ import Navigation from './Navigation';
 class Sidebar extends Component {
   render() {
     const {
-      widgets
+      widgets,
+      pages
     } = this.props;
 
     return (
       <aside className='sidebar'>
-        <Navigation />
+        <Navigation pages={pages} />
       </aside>
     );
   }

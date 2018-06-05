@@ -18,6 +18,7 @@ const pagesReducer = (
     case RECEIVE_PAGES:
       return Object.assign({}, state, {
         isFetching: false,
+        currentPage: action.pageurl,
         items: action.pages,
         lastUpdated: action.receivedAt
       });
@@ -30,9 +31,7 @@ const pages = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_PAGES:
     case REQUEST_PAGES:
-      return Object.assign({}, state, {
-        pages: pagesReducer(state[action.pageurl], action)
-      });
+      return Object.assign({}, state, pagesReducer(state[action.pageurl], action));
     default:
       return state;
   }

@@ -12,3 +12,7 @@ li.post-list-item {
   background-color: #fefefe;
   border-radius: 3px;
 }
+
+.page-content {
+  @extend li.post-list-item;
+}

@@ -9,7 +9,8 @@ import {
 import AsyncApp from './containers/AsyncApp';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import fetchPagesIfNeeded from '../actions';
+import Loader from './components/Loader';
+import { fetchPagesIfNeeded } from './actions';
 import './App.css';
 
 class App extends Component {
@@ -34,18 +35,21 @@ class App extends Component {
     if (isFetching) {
       return <Loader />;
     }
-    return (
-      <div className="App">
-        <Header pages={pages} />
-        <Router>
-          <Switch>
-            {this.buildRoutes(pages)}
-            <Route render={() => { return <Redirect to="/" /> }} />
-          </Switch>
-        </Router>
-        <Footer />
-      </div>
-    );
+    if (pages && pages.length > 0) {
+      return (
+        <div className="App">
+          <Header pages={pages} />
+          <Router>
+            <Switch>
+              {this.buildRoutes(pages)}
+              <Route path="/" component={ AsyncApp } exact />
+            </Switch>
+          </Router>
+          <Footer />
+        </div>
+      );
+    }
+    return null;
   }
 }
 

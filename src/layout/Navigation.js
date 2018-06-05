@@ -7,9 +7,8 @@ class Navigation extends Component {
     const { pages } = this.props;
 
     const pageLinks = pages.map(page => (
-      <li>
+      <li key={page.id}>
         <Link
-          key={page.id}
           to={`/${page.slug}`}
           title={page.title}>
           {page.title.rendered}
@@ -33,5 +32,9 @@ class Navigation extends Component {
     );
   }
 }
+
+Navigation.propTypes = {
+  pages: PropTypes.array.isRequired
+};
 
 export default Navigation;

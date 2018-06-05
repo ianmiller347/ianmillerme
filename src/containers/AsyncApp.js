@@ -41,18 +41,21 @@ class AsyncApp extends Component {
     const {
       selectedPost,
       posts,
-      isFetching
+      isFetchingPosts,
+      pages
     } = this.props;
 
     return (
       <section className='main-section grid grid--has-sidebar'>
         <Main
+          currentUrl={this.props.location.pathname}
           selectedPost={selectedPost}
           posts={posts}
-          isFetching={isFetching}
+          pages={pages}
+          isFetching={isFetchingPosts}
           onPostClick={this.handlePostClick}
         />
-        <Sidebar widgets={[]} />
+        <Sidebar widgets={[]} pages={pages} />
       </section>
     );
   }
@@ -61,28 +64,38 @@ class AsyncApp extends Component {
 AsyncApp.propTypes = {
   selectedPost: PropTypes.string.isRequired,
   posts: PropTypes.array.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  lastUpdated: PropTypes.number,
+  pages: PropTypes.array.isRequired,
+  isFetchingPages: PropTypes.bool.isRequired,
+  isFetchingPosts: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
-  const { selectedPost, postsByUrl } = state;
-  const {
-    isFetching,
-    lastUpdated,
-    items: posts
-  } = postsByUrl[selectedPost] || {
-    isFetching: true,
-    items: []
+  const stateFromProps = {
+    pages: [],
+    posts: [],
+    isFetchingPosts: false,
+    isFetchingPages: false,
+    selectedPost: state.selectedPost
   };
- 
-  return {
-    selectedPost,
-    posts,
-    isFetching,
-    lastUpdated
-  };
+
+  if (state.pages && state.pages.isFetching != null) {
+    stateFromProps.isFetching = state.pages.isFetching;
+  }
+
+  if (state.pages && state.pages.items && state.pages.items.length > 0) {
+    stateFromProps.pages = state.pages.items;
+  }
+
+  if (state.postsByUrl && state.postsByUrl.isFetching != null) {
+    stateFromProps.isFetching = state.postsByUrl.isFetching;
+  }
+
+  if (state.postsByUrl && state.postsByUrl.items && state.postsByUrl.items.length > 0) {
+    stateFromProps.posts = state.postsByUrl.items;
+  }
+
+  return stateFromProps;
 }
 
 export default connect(mapStateToProps)(AsyncApp);

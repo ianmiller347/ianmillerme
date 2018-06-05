@@ -39,9 +39,7 @@ const postsByUrl = (state = {}, action) => {
     case INVALIDATE_POST:
     case RECEIVE_POSTS:
     case REQUEST_POSTS:
-      return Object.assign({}, state, {
-        [action.posturl]: posts(state[action.posturl], action)
-      });
+      return Object.assign({}, state, posts(state[action.posturl], action));
     default:
       return state;
   }
