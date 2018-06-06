@@ -1,63 +1,78 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import {
-  selectPost,
-  fetchPostsIfNeeded,
-  invalidatePost
-} from '../actions';
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom';
 import PostList from '../components/PostList';
 import Loader from '../components/Loader';
 import Main from '../layout/Main';
 import Sidebar from '../layout/Sidebar';
+import Page from '../components/Page';
  
 class AsyncApp extends Component {
-  componentDidMount() {
-    const { dispatch, selectedPost } = this.props;
-    dispatch(fetchPostsIfNeeded(selectedPost));
-  }
+  buildRoutes(pages) {
+    const {
+      selectedPost,
+      posts,
+      isFetchingPages,
+      isFetchingPosts
+    } = this.props;
 
-  componentDidUpdate(prevProps) {
-    if (this.props.selectedPost !== prevProps.selectedPost) {
-      const { dispatch, selectedPost } = this.props;
-      dispatch(fetchPostsIfNeeded(selectedPost));
-    }
-  }
-
-  handlePostClick = (nextPostUrl) => {
-    this.props.dispatch(selectPost(nextPostUrl));
-    this.props.dispatch(fetchPostsIfNeeded(nextPostUrl));
-  }
-
-  handleRefreshClick = (e) => {
-    e.preventDefault();
- 
-    const { dispatch, selectedPost } = this.props;
-    dispatch(invalidatePost(selectedPost));
-    dispatch(fetchPostsIfNeeded(selectedPost));
+    return pages.map(page => (
+      <Route
+        key={page.slug}
+        path={`/${page.slug}`}
+        exact
+        render={props =>
+          <Page
+            pages={pages}
+            posts={posts}
+            isFetchingPosts={isFetchingPosts}
+            isFetchingPages={isFetchingPages}
+            selectedPost={selectedPost}
+            {...props}
+          />
+        }
+      />
+    ));
   }
 
   render() {
     const {
       selectedPost,
       posts,
+      isFetchingPages,
       isFetchingPosts,
       pages
     } = this.props;
 
-    return (
-      <section className='main-section grid grid--has-sidebar'>
-        <Main
-          currentUrl={this.props.location.pathname}
-          selectedPost={selectedPost}
-          posts={posts}
-          pages={pages}
-          isFetching={isFetchingPosts}
-          onPostClick={this.handlePostClick}
-        />
-        <Sidebar widgets={[]} pages={pages} />
-      </section>
-    );
+    if (isFetchingPages) {
+      return <Loader />;
+    }
+
+    if (pages && pages.length > 0) {
+      return (
+        <Router>
+          <Switch>
+            {this.buildRoutes(pages)}
+            <Route path="/" render={props =>
+              <Page
+                pages={pages}
+                posts={posts}
+                isFetchingPosts={isFetchingPosts}
+                isFetchingPages={isFetchingPages}
+                selectedPost={selectedPost}
+                {...props}
+              />
+            } />
+          </Switch>
+        </Router>
+      );
+    }
+    return null;
   }
 }
 
@@ -66,36 +81,7 @@ AsyncApp.propTypes = {
   posts: PropTypes.array.isRequired,
   pages: PropTypes.array.isRequired,
   isFetchingPages: PropTypes.bool.isRequired,
-  isFetchingPosts: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired
+  isFetchingPosts: PropTypes.bool.isRequired
 };
 
-function mapStateToProps(state) {
-  const stateFromProps = {
-    pages: [],
-    posts: [],
-    isFetchingPosts: false,
-    isFetchingPages: false,
-    selectedPost: state.selectedPost
-  };
-
-  if (state.pages && state.pages.isFetching != null) {
-    stateFromProps.isFetching = state.pages.isFetching;
-  }
-
-  if (state.pages && state.pages.items && state.pages.items.length > 0) {
-    stateFromProps.pages = state.pages.items;
-  }
-
-  if (state.postsByUrl && state.postsByUrl.isFetching != null) {
-    stateFromProps.isFetching = state.postsByUrl.isFetching;
-  }
-
-  if (state.postsByUrl && state.postsByUrl.items && state.postsByUrl.items.length > 0) {
-    stateFromProps.posts = state.postsByUrl.items;
-  }
-
-  return stateFromProps;
-}
-
-export default connect(mapStateToProps)(AsyncApp);
+export default AsyncApp;

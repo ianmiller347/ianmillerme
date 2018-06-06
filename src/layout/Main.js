@@ -22,28 +22,29 @@ class Main extends Component {
   }
 
   _renderPage(url, posts, pages) {
-    const pageMatchArray = pages.filter(page => page.slug === url.substr(1));
-    if (pages
-      && pages.length > 0
-      && pageMatchArray.length > 0) {
-      return (
-        <div className="page-content">
-          <h1>{pageMatchArray[0].title.rendered}</h1>
-          <div
-            className="page-content__body"
-            dangerouslySetInnerHTML={{__html: pageMatchArray[0].content.rendered}} />
-        </div>
-      );
-    }
-    const postMatchArray = posts.filter(post => post.slug === url.substr(1));
-    if (posts
-      && posts.length > 0
-      && postMatchArray.length > 0) {
+    if (pages && pages.length > 0) {
+      const pageMatchArray = pages.filter(page => page.slug === url.substr(1));
+      if (pageMatchArray.length > 0) {
         return (
-          <div>
-            {postMatchArray[0].content.rendered}
+          <div className="page-content">
+            <h1>{pageMatchArray[0].title.rendered}</h1>
+            <div
+              className="page-content__body"
+              dangerouslySetInnerHTML={{__html: pageMatchArray[0].content.rendered}} />
           </div>
         );
+      }
+      const postMatchArray = posts.filter(post => post.slug === url.substr(1));
+      if (posts
+        && posts.length > 0
+        && postMatchArray.length > 0) {
+          return (
+            <div>
+              {postMatchArray[0].content.rendered}
+            </div>
+          );
+      }
+      return null;
     }
     return null;
   }
