@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
  
 class Navigation extends Component {
   render() {
@@ -8,11 +8,11 @@ class Navigation extends Component {
     if (pages && pages.length > 0) {
       const pageLinks = pages.map(page => (
         <li key={page.id}>
-          <Link
+          <NavLink
             to={`/${page.slug}`}
-            title={page.title}>
+            title={page.title.rendered}>
             {page.title.rendered}
-          </Link>
+          </NavLink>
         </li>
       ));
 
@@ -20,11 +20,12 @@ class Navigation extends Component {
         <nav className='nav-container'>
           <ul className='nav-list'>
             <li>
-              <Link
+              <NavLink
                 to='/'
-                title='Home'>
+                title='Home'
+                exact>
                 Home
-              </Link>
+              </NavLink>
             </li>
             {pageLinks}
           </ul>

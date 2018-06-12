@@ -1,6 +1,31 @@
 .nav-list {
+  padding: 0;
+  margin: 0;
 
   li {
     list-style: none;
+
+    a {
+      display: block;
+      padding: 1rem;
+      text-decoration: none;
+      transition: all .25s;
+      color: black;
+      background-color: #fefefe;
+      border-radius: 3px;
+      box-shadow: 2px 4px 3px #ccc;
+      margin-bottom: .25rem;
+
+      &:hover,
+      &.active {
+        box-shadow: 0 0 1px #ccc;
+        color: $color-gray;
+        background-color: $color-gray--lighter;
+      }
+
+      &:focus {
+        background-color: $color-gray--light;
+      }
+    }
   }
 }

@@ -37,21 +37,25 @@ class Page extends Component {
           selectedPost={selectedPost}
           posts={posts}
           pages={pages}
-          isFetching={isFetchingPosts}
+          isFetching={isFetchingPosts || isFetchingPages}
           onPostClick={this.handlePostClick}
         />
-        <Sidebar widgets={[]} pages={pages} />
+        <Sidebar pages={pages} />
       </section>
     );
   }
 }
 
 Page.propTypes = {
-  url: PropTypes.string.isRequired
+  pages: PropTypes.array.isRequired,
+  posts: PropTypes.array.isRequired,
+  isFetchingPosts: PropTypes.bool.isRequired,
+  isFetchingPages: PropTypes.bool.isRequired,
+  selectedPost: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {
-  // this just makes this.props.dispatch available. 
+  // this just makes this.props.dispatch available.
   return {};
 }
 

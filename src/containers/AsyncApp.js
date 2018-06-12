@@ -21,7 +21,9 @@ class AsyncApp extends Component {
       isFetchingPosts
     } = this.props;
 
-    return pages.map(page => (
+    const pagesAndPosts = pages.concat(posts);
+
+    return pagesAndPosts.map(page => (
       <Route
         key={page.slug}
         path={`/${page.slug}`}

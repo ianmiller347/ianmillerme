@@ -61,18 +61,22 @@ function mapStateToProps(state) {
   };
 
   if (state.pages && state.pages.isFetching != null) {
-    stateFromProps.isFetching = state.pages.isFetching;
+    stateFromProps.isFetchingPages = state.pages.isFetching;
   }
 
-  if (state.pages && state.pages.items && state.pages.items.length > 0) {
+  if (state.pages
+    && state.pages.items
+    && state.pages.items.length > 0) {
     stateFromProps.pages = state.pages.items;
   }
 
   if (state.postsByUrl && state.postsByUrl.isFetching != null) {
-    stateFromProps.isFetching = state.postsByUrl.isFetching;
+    stateFromProps.isFetchingPosts = state.postsByUrl.isFetching;
   }
 
-  if (state.postsByUrl && state.postsByUrl.items && state.postsByUrl.items.length > 0) {
+  if (state.postsByUrl
+    && state.postsByUrl.items
+    && state.postsByUrl.items.length > 0) {
     stateFromProps.posts = state.postsByUrl.items;
   }
 
