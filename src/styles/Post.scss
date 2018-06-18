@@ -16,3 +16,7 @@ li.post-list-item {
 .page-content {
   @extend li.post-list-item;
 }
+
+.screen-reader-text {
+  display: none;
+}

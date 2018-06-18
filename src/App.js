@@ -4,11 +4,9 @@ import { connect } from 'react-redux';
 import AsyncApp from './containers/AsyncApp';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Loader from './components/Loader';
 import {
   fetchPagesIfNeeded,
   fetchPostsIfNeeded,
-  selectPost
 } from './actions';
 import './App.css';
 

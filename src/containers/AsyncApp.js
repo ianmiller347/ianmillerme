@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
   Route,
-  Redirect,
   Switch
 } from 'react-router-dom';
-import PostList from '../components/PostList';
 import Loader from '../components/Loader';
-import Main from '../layout/Main';
-import Sidebar from '../layout/Sidebar';
 import Page from '../components/Page';
  
 class AsyncApp extends Component {

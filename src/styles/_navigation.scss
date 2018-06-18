@@ -18,13 +18,14 @@
 
       &:hover,
       &.active {
-        box-shadow: 0 0 1px #ccc;
+        box-shadow: 0 1px 2px #ccc;
         color: $color-gray;
         background-color: $color-gray--lighter;
       }
 
       &:focus {
-        background-color: $color-gray--light;
+        box-shadow: 0 0 1px #ccc;
+        background-color: darken($color-gray--lighter, 5%);
       }
     }
   }

@@ -2,16 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from 'react-router-dom';
-import {
   selectPost,
   fetchPostsIfNeeded
 } from '../actions';
-import PostList from './PostList';
-import Loader from './Loader';
 import Main from '../layout/Main';
 import Sidebar from '../layout/Sidebar';
 

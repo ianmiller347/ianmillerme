@@ -16,8 +16,19 @@ class Main extends Component {
     return (
       <main className='main-section'>
         {this._renderPage(currentUrl, posts, pages)}
-        {this._renderPosts(isFetching, posts)}
+        {this._renderPosts(isFetching, posts, selectedPost)}
       </main>
+    );
+  }
+
+  _renderPageContent(page) {
+    return (
+      <div className="page-content">
+        <h1>{page.title.rendered}</h1>
+        <div
+          className="page-content__body"
+          dangerouslySetInnerHTML={{__html: page.content.rendered}} />
+      </div>
     );
   }
 
@@ -25,36 +36,25 @@ class Main extends Component {
     if (pages && pages.length > 0) {
       const pageMatchArray = pages.filter(page => page.slug === url.substr(1));
       if (pageMatchArray.length > 0) {
-        return (
-          <div className="page-content">
-            <h1>{pageMatchArray[0].title.rendered}</h1>
-            <div
-              className="page-content__body"
-              dangerouslySetInnerHTML={{__html: pageMatchArray[0].content.rendered}} />
-          </div>
-        );
+        return this._renderPageContent(pageMatchArray[0]);
       }
       const postMatchArray = posts.filter(post => post.slug === url.substr(1));
       if (posts
         && posts.length > 0
         && postMatchArray.length > 0) {
-          return (
-            <div>
-              {postMatchArray[0].content.rendered}
-            </div>
-          );
+          return this._renderPageContent(postMatchArray[0]);
       }
       return null;
     }
     return null;
   }
 
-  _renderPosts(isFetching, posts) {
+  _renderPosts(isFetching, posts, selectedPost) {
     if (isFetching) {
       return <Loader />;
     }
     else if (posts && posts.length > 0) {
-      return <PostList posts={posts} onPostClick={this.props.onPostClick} />;
+      return <PostList posts={posts} selectedPost={selectedPost} onPostClick={this.props.onPostClick} />;
     }
     return <p>There are no posts right now.</p>;
   }

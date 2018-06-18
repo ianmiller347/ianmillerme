@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-const PostListItem = ({ onClick, active, title, excerpt }) => (
-  <li
-    onClick={onClick}
-    className={`post-list-item`}>
+const PostListItem = ({ active, title, fields, slug }) => (
+  <li className={`post-list-item`}>
     <h3>{title.rendered}</h3>
-    <div dangerouslySetInnerHTML={{__html: excerpt.rendered}} />
+    <p>{fields.intro}</p>
+    <Link to={`/${slug}`} title={`Continue Reading ${title.rendered}`}>
+      Continue Reading
+      <span className="screen-reader-text">: {title.rendered}</span>
+    </Link>
   </li>
 );
 
 PostListItem.propTypes = {
-  onClick: PropTypes.func.isRequired,
   active: PropTypes.bool,
   title: PropTypes.shape({
     rendered: PropTypes.string.isRequired
