@@ -3,7 +3,7 @@
   grid-grap: 1rem;
 
   &--has-sidebar {
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 1fr 3fr;
 
     @media all and (max-width: 767px) {
       grid-template-columns: repeat(1, 1fr);

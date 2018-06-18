@@ -6,7 +6,6 @@ import Loader from '../components/Loader';
 class Main extends Component {
   render() {
     const {
-      selectedPost,
       posts,
       pages,
       isFetching,
@@ -16,7 +15,7 @@ class Main extends Component {
     return (
       <main className='main-section'>
         {this._renderPage(currentUrl, posts, pages)}
-        {this._renderPosts(isFetching, posts, selectedPost)}
+        {this._renderPosts(isFetching, posts)}
       </main>
     );
   }
@@ -49,19 +48,18 @@ class Main extends Component {
     return null;
   }
 
-  _renderPosts(isFetching, posts, selectedPost) {
+  _renderPosts(isFetching, posts) {
     if (isFetching) {
       return <Loader />;
     }
     else if (posts && posts.length > 0) {
-      return <PostList posts={posts} selectedPost={selectedPost} onPostClick={this.props.onPostClick} />;
+      return <PostList posts={posts} onPostClick={this.props.onPostClick} />;
     }
     return <p>There are no posts right now.</p>;
   }
 }
 
 Main.propTypes = {
-  selectedPost: PropTypes.string.isRequired,
   posts: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired
 };

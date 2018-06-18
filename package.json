@@ -1,7 +1,8 @@
 {
   "name": "ianmillerme",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "homepage": "http://ianmiller.me/wp-content/themes/ianmillerme-theme/",
   "dependencies": {
     "cross-fetch": "^1.1.1",
     "node-sass-chokidar": "^0.0.3",

@@ -11,7 +11,6 @@ import Page from '../components/Page';
 class AsyncApp extends Component {
   buildRoutes(pages) {
     const {
-      selectedPost,
       posts,
       isFetchingPages,
       isFetchingPosts
@@ -30,7 +29,6 @@ class AsyncApp extends Component {
             posts={posts}
             isFetchingPosts={isFetchingPosts}
             isFetchingPages={isFetchingPages}
-            selectedPost={selectedPost}
             {...props}
           />
         }
@@ -40,7 +38,6 @@ class AsyncApp extends Component {
 
   render() {
     const {
-      selectedPost,
       posts,
       isFetchingPages,
       isFetchingPosts,
@@ -62,7 +59,6 @@ class AsyncApp extends Component {
                 posts={posts}
                 isFetchingPosts={isFetchingPosts}
                 isFetchingPages={isFetchingPages}
-                selectedPost={selectedPost}
                 {...props}
               />
             } />
@@ -75,7 +71,6 @@ class AsyncApp extends Component {
 }
 
 AsyncApp.propTypes = {
-  selectedPost: PropTypes.string.isRequired,
   posts: PropTypes.array.isRequired,
   pages: PropTypes.array.isRequired,
   isFetchingPages: PropTypes.bool.isRequired,

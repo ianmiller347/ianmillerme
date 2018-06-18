@@ -4,46 +4,51 @@ import { connect } from 'react-redux';
 import AsyncApp from './containers/AsyncApp';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Loader from './components/Loader';
 import {
   fetchPagesIfNeeded,
   fetchPostsIfNeeded,
+  fetchBlogInfo,
 } from './actions';
 import './App.css';
 
 class App extends Component {
   componentDidMount() {
-    const { dispatch, selectedPost } = this.props;
+    const { dispatch } = this.props;
+    dispatch(fetchBlogInfo());
     dispatch(fetchPagesIfNeeded());
-    dispatch(fetchPostsIfNeeded(selectedPost));
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.selectedPost !== prevProps.selectedPost) {
-      const { dispatch, selectedPost } = this.props;
-      dispatch(fetchPostsIfNeeded(selectedPost));
-    }
+    dispatch(fetchPostsIfNeeded());
   }
 
   render() {
     const {
       pages,
       posts,
+      blogInfo,
       isFetchingPages,
       isFetchingPosts,
-      selectedPost
+      isFetchingBlogInfo,
     } = this.props;
+
+    if (isFetchingBlogInfo) {
+      return (
+        <div className="flex-column display-flex fill-height fill-width fully-centered">
+          <Loader />
+          <h2>Preparing Ian Miller (me)...</h2>
+        </div>
+      );
+    }
 
     return (
       <div className="App">
-        <Header pages={pages} />
+        <Header blogInfo={blogInfo} />
         <AsyncApp
           pages={pages}
           posts={posts}
           isFetchingPages={isFetchingPages}
           isFetchingPosts={isFetchingPosts}
-          selectedPost={selectedPost}
         />
-        <Footer />
+        <Footer blogInfo={blogInfo} />
       </div>
     );
   }
@@ -53,9 +58,10 @@ function mapStateToProps(state) {
   const stateFromProps = {
     pages: [],
     posts: [],
+    blogInfo: {},
     isFetchingPosts: false,
     isFetchingPages: false,
-    selectedPost: state.selectedPost
+    isFetchingBlogInfo: false,
   };
 
   if (state.pages && state.pages.isFetching != null) {
@@ -68,14 +74,22 @@ function mapStateToProps(state) {
     stateFromProps.pages = state.pages.items;
   }
 
-  if (state.postsByUrl && state.postsByUrl.isFetching != null) {
-    stateFromProps.isFetchingPosts = state.postsByUrl.isFetching;
+  if (state.posts && state.posts.isFetching != null) {
+    stateFromProps.isFetchingPosts = state.posts.isFetching;
   }
 
-  if (state.postsByUrl
-    && state.postsByUrl.items
-    && state.postsByUrl.items.length > 0) {
-    stateFromProps.posts = state.postsByUrl.items;
+  if (state.posts
+    && state.posts.items
+    && state.posts.items.length > 0) {
+    stateFromProps.posts = state.posts.items;
+  }
+
+  if (state.blogInfo && state.blogInfo.isFetching != null) {
+    stateFromProps.isFetchingBlogInfo = state.blogInfo.isFetching;
+  }
+
+  if (state.blogInfo && state.blogInfo.data) {
+    stateFromProps.blogInfo = state.blogInfo.data;
   }
 
   return stateFromProps;
@@ -83,7 +97,6 @@ function mapStateToProps(state) {
 
 App.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  selectedPost: PropTypes.string.isRequired,
   posts: PropTypes.array.isRequired,
   pages: PropTypes.array.isRequired,
   isFetchingPages: PropTypes.bool.isRequired,

@@ -1,22 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  selectPost,
-  fetchPostsIfNeeded
-} from '../actions';
 import Main from '../layout/Main';
 import Sidebar from '../layout/Sidebar';
 
 class Page extends Component {
-  handlePostClick = (nextPostUrl) => {
-    this.props.dispatch(selectPost(nextPostUrl));
-    this.props.dispatch(fetchPostsIfNeeded(nextPostUrl));
-  }
 
   render() {
     const {
-      selectedPost,
       posts,
       isFetchingPages,
       isFetchingPosts,
@@ -25,15 +16,13 @@ class Page extends Component {
 
     return (
       <section className='main-section grid grid--has-sidebar'>
+        <Sidebar pages={pages} />
         <Main
           currentUrl={this.props.location.pathname}
-          selectedPost={selectedPost}
           posts={posts}
           pages={pages}
           isFetching={isFetchingPosts || isFetchingPages}
-          onPostClick={this.handlePostClick}
         />
-        <Sidebar pages={pages} />
       </section>
     );
   }
@@ -44,7 +33,6 @@ Page.propTypes = {
   posts: PropTypes.array.isRequired,
   isFetchingPosts: PropTypes.bool.isRequired,
   isFetchingPages: PropTypes.bool.isRequired,
-  selectedPost: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {

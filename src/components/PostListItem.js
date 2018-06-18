@@ -6,7 +6,10 @@ const PostListItem = ({ active, title, fields, slug }) => (
   <li className={`post-list-item`}>
     <h3>{title.rendered}</h3>
     <p>{fields.intro}</p>
-    <Link to={`/${slug}`} title={`Continue Reading ${title.rendered}`}>
+    <Link
+      to={`/${slug}`}
+      className='read-more-link'
+      title={`Continue Reading ${title.rendered}`}>
       Continue Reading
       <span className="screen-reader-text">: {title.rendered}</span>
     </Link>

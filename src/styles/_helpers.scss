@@ -1,3 +1,25 @@
 .padding {
   padding: 1rem;
 }
+
+.display-flex {
+  display: flex;
+}
+
+.fill-height {
+  height: 100%;
+}
+
+.fill-width {
+  width: 100%;
+}
+
+.fully-centered {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-column {
+  flex-direction: column;
+}

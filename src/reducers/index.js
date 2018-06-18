@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import postsByUrl from './postsByUrl';
+import posts from './posts';
 import pages from './pages';
-import selectedPost from './selectedPost';
+import blogInfo from './blogInfo';
 
 const rootReducer = combineReducers({
-  postsByUrl,
+  posts,
   pages,
-  selectedPost
+  blogInfo
 });
  
 export default rootReducer;

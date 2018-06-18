@@ -10,3 +10,14 @@ html, body {
 li {
   list-style: none;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: justify;
+}

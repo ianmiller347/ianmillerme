@@ -2,69 +2,54 @@ import fetch from 'cross-fetch';
  
 export const REQUEST_POSTS = 'REQUEST_POSTS';
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
-export const SELECT_POST = 'SELECT_POST';
-export const INVALIDATE_POST = 'INVALIDATE_POST';
 export const REQUEST_PAGES = 'REQUEST_PAGES';
 export const RECEIVE_PAGES = 'RECEIVE_PAGES';
+export const REQUEST_BLOGINFO = 'REQUEST_BLOGINFO';
+export const RECEIVE_BLOGINFO = 'RECEIVE_BLOGINFO';
 
 const pagesEndPoint = `//ianmiller.me/wp-json/wp/v2/pages`;
 const postsEndPoint = `//ianmiller.me/wp-json/wp/v2/posts`;
+const getAllEndpoint = '//ianmiller.me/wp-json';
  
-export function selectPost(posturl) {
+function requestPosts() {
   return {
-    type: SELECT_POST,
-    posturl
+    type: REQUEST_POSTS
   };
 }
  
-export function invalidatePost(posturl) {
-  return {
-    type: INVALIDATE_POST,
-    posturl
-  };
-}
- 
-function requestPosts(posturl) {
-  return {
-    type: REQUEST_POSTS,
-    posturl
-  };
-}
- 
-function receivePosts(posturl, json) {
+function receivePosts(json) {
   return {
     type: RECEIVE_POSTS,
-    posturl,
     posts: json.map(child => child),
     receivedAt: Date.now()
   };
 }
  
-function fetchPosts(posturl) {
+function fetchPosts() {
   return dispatch => {
-    dispatch(requestPosts(posturl))
+    dispatch(requestPosts())
     return fetch(postsEndPoint)
       .then(response => response.json())
-      .then(json => dispatch(receivePosts(posturl, json)))
+      .then(json => dispatch(receivePosts(json)))
       .catch(error => console.log('error', error))
   };
 }
  
-function shouldFetchPosts(state, posturl) {
-  const posts = state.postsByUrl[posturl];
+function shouldFetchPosts(state) {
+  const { posts } = state;
   if (!posts) {
     return true;
   }
   else if (posts.isFetching) {
     return false;
   }
-  return posts.didInvalidate;
+  return true;
 }
  
-export function fetchPostsIfNeeded(posturl) {
+export function fetchPostsIfNeeded() {
   return (dispatch, getState) => {
-    if (shouldFetchPosts(getState(), posturl)) {
-      return dispatch(fetchPosts(posturl));
+    if (shouldFetchPosts(getState())) {
+      return dispatch(fetchPosts());
     }
   };
 }
@@ -113,4 +98,31 @@ export function fetchPagesIfNeeded(pageurl) {
       return dispatch(fetchPages(pageurl));
     }
   };
+}
+
+// blog info
+const requestBlogInfo = () => ({
+  type: REQUEST_BLOGINFO
+});
+ 
+function receiveBlogInfo(json) {
+  return {
+    type: RECEIVE_BLOGINFO,
+    data: json,
+    receivedAt: Date.now()
+  };
+}
+
+function getBlogInfo() {
+  return dispatch => {
+    dispatch(requestBlogInfo())
+    return fetch(getAllEndpoint)
+      .then(response => response.json())
+      .then(json => dispatch(receiveBlogInfo(json)))
+      .catch(error => console.log('error', error))
+  };
+}
+
+export function fetchBlogInfo() {
+  return dispatch => dispatch(getBlogInfo());
 }
