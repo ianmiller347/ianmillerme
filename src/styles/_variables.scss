@@ -4,3 +4,5 @@ $color-gray: #A6A6A6; // rgb(166,166,166)
 $color-gray--light: #C9C9C9; // rgb(201,201,201)
 $color-gray--lighter: lighten($color-gray--light, 18%);
 $color-gray-bg: #ececec;
+$color-link: $primary-brand-color;
+$color-link-hover: lighten($color-link, 40%);

@@ -1,10 +1,13 @@
 {
   "name": "ianmillerme",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "license": "MIT / X11",
+  "author": "Ian J Miller",
   "private": false,
   "homepage": "http://ianmiller.me/wp-content/themes/ianmillerme-theme/",
   "dependencies": {
     "cross-fetch": "^1.1.1",
+    "feather-icons-react": "^0.2.0",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.1.2",
     "react": "^16.2.0",

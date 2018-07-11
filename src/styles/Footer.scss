@@ -1,6 +1,22 @@
+@import 'variables';
+
 footer.app-footer {
   background-color: black;
   color: white;
   max-width: 100%;
   padding: 1rem;
+
+  a {
+    color: white;
+
+    &:hover {
+      color: $color-link-hover;
+    }
+  }
+
+  .social-container {
+    a {
+      padding: .5rem;
+    }
+  }
 }

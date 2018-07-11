@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import PostList from '../components/PostList';
 import Loader from '../components/Loader';
+import { SITE_TITLE } from '../constants';
  
 class Main extends Component {
   render() {
@@ -21,6 +22,10 @@ class Main extends Component {
   }
 
   _renderPageContent(page) {
+    const pageTitle = `${page.title.rendered} | ${SITE_TITLE}`;
+    if (document.title !== pageTitle) {
+      document.title = pageTitle;
+    }
     return (
       <div className="page-content">
         <h1>{page.title.rendered}</h1>

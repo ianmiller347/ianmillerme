@@ -3,6 +3,22 @@ html, body {
   height: 100%;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #ececec;
+}
+
+a {
+  color: $color-link;
+  transition: all .25s;
+
+  &:hover {
+    color: $color-link-hover;
+  }
+}
+
 #root {
   height: 100%;
 }
