@@ -1,12 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch
-} from 'react-router-dom';
 import configureStore from './configureStore';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -15,12 +9,7 @@ const store = configureStore();
 
 render(
   <Provider store={store}>
-    <Router>
-      <Switch>
-        <Route path="/" component={ App } exact />
-        <Route render={() => { return <Redirect to="/" /> }} />
-      </Switch>
-    </Router>
+    <App />
   </Provider>,
   document.getElementById('root')
 );

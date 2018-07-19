@@ -21,8 +21,7 @@ class AsyncApp extends Component {
     return pagesAndPosts.map(page => (
       <Route
         key={page.slug}
-        path={`/${page.slug}`}
-        exact
+        path={`/${page.slug}/`}
         render={props =>
           <Page
             pages={pages}
@@ -45,15 +44,19 @@ class AsyncApp extends Component {
     } = this.props;
 
     if (isFetchingPages) {
-      return <Loader />;
+      return (
+        <Loader 
+          type="small"
+          message="Fetching pages..." 
+        />
+      );
     }
 
     if (pages && pages.length > 0) {
       return (
         <Router>
           <Switch>
-            {this.buildRoutes(pages)}
-            <Route path="/" render={props =>
+            <Route exact path="/" render={props =>
               <Page
                 pages={pages}
                 posts={posts}
@@ -62,6 +65,7 @@ class AsyncApp extends Component {
                 {...props}
               />
             } />
+            {this.buildRoutes(pages)}
           </Switch>
         </Router>
       );

@@ -33,8 +33,7 @@ class App extends Component {
     if (isFetchingBlogInfo) {
       return (
         <div className="flex-column display-flex fill-height fill-width fully-centered">
-          <Loader />
-          <h2>Preparing Ian Miller (me)...</h2>
+          <Loader type="large" message="Preparing Ian Miller (me)..." />
         </div>
       );
     }

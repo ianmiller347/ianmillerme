@@ -1,49 +1,92 @@
-// i directly copied this from: https://projects.lukehaas.me/css-loaders/
-// i use this pretty much every time i need a loader.
+// i finally made my own loader
+
+.loader-container {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
 
 .loader {
-  font-size: 10px;
-  margin: 50px auto;
-  text-indent: -9999em;
-  width: 11em;
-  height: 11em;
-  border-radius: 50%;
-  background: $color-gray;
-  background: linear-gradient(to right, $color-gray 10%, rgba(0,0,0, 0) 42%);
-  position: relative;
-  animation: load3 1.4s infinite linear;
-  transform: translateZ(0);
-
-  &:before {
-    width: 50%;
-    height: 50%;
-    background: $color-gray;
-    border-radius: 100% 0 0 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: '';
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column-reverse;
+  margin: 0;
+  padding: 0;
+  
+  .loader__caption {
+    font-size: 1rem;
+    padding: .75rem .25rem;
+    font-weight: bold;
   }
 
-  &:after {
-    background: $color-gray-bg;
-    width: 75%;
-    height: 75%;
-    border-radius: 50%;
-    content: '';
-    margin: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+  &--large {
+    max-width: 340px;
+
+    .loader__caption {
+      font-size: 1.75rem;
+      padding: 1rem .25rem;
+      width: 125%;
+    }
+
+    @media screen and (max-width: 400px) {
+      max-width: 95%;
+
+      .loader__caption {
+        font-size: 1.5rem;
+        width: 100%;
+      }
+    }
+  }
+
+  &--small {
+    max-width: 150px;
+
+    .loader__caption {
+      font-size: .8rem;
+    }
+  }
+
+  &--tiny {
+    max-width: 100px;
+
+    .loader__caption {
+      font-size: .625rem;
+    }
+  }
+
+  .loader__vector {
+    fill: none;
+    display: block;
+    stroke: black;
+    width: 100%;
+
+    .triangle {
+      stroke-dasharray: 17;
+      animation: dash 2.5s cubic-bezier(0.35, 0.04, 0.63, 0.95) infinite;
+
+      &:nth-child(2) {
+        animation-delay: .25s;
+      }
+      
+      &:nth-child(3) {
+        animation-delay: .5s;
+      }
+    }
   }
 }
 
-@keyframes load3 {
-  0% {
-    transform: rotate(0deg);
+@keyframes dash {
+  to {
+    stroke-dashoffset: 136;
   }
+}
+
+@keyframes rotate {
   100% {
     transform: rotate(360deg);
   }

@@ -82,12 +82,19 @@ function fetchPages(pageurl) {
 }
  
 function shouldFetchPages(state, pageurl) {
-  const pages = state.pages[pageurl];
+  const { pages } = state;
   if (!pages) {
     return true;
   }
   else if (pages.isFetching) {
     return false;
+  }
+  if (pages.lastUpdated) {
+    const now = Date.now();
+    const timeSinceUpdated = now - pages.lastUpdated;
+    if (timeSinceUpdated < 666420) {
+      return false;
+    }
   }
   return true;
 }

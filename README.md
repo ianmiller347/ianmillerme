@@ -1,10 +1,13 @@
 # Ian Miller - Me
-This project was created with react, redux, and the Wordpress API.
+This project was created with React, Redux, and the WordPress API.
+It's pretty meta.
 
 View the full site here: http://ianmiller.me
 
 ### Roadmap
-- Landing page route
+- Landing page content
 - Projects/portfolio page
-- only load posts if necessary
+- limit posts, click to show more, or pagination
+- only re-load posts if necessary
 - SEO enhancements
+- SSR

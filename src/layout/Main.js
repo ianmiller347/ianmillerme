@@ -21,6 +21,17 @@ class Main extends Component {
     );
   }
 
+  // tests if current URL matches a slug
+  // params: url (string), slug (string)
+  // returns bool
+  urlMatchesSlug(slug, url) {
+    // strings can be equal
+    // or equal without the slashes. Let's remove those
+    const slugNoSlashes = slug.replace(/\//g, '');
+    const urlNoSlashes = url.replace(/\//g, '');
+    return (slugNoSlashes === urlNoSlashes);
+  }
+
   _renderPageContent(page) {
     const pageTitle = `${page.title.rendered} | ${SITE_TITLE}`;
     if (document.title !== pageTitle) {
@@ -38,11 +49,11 @@ class Main extends Component {
 
   _renderPage(url, posts, pages) {
     if (pages && pages.length > 0) {
-      const pageMatchArray = pages.filter(page => page.slug === url.substr(1));
+      const pageMatchArray = pages.filter(page => this.urlMatchesSlug(page.slug, url));
       if (pageMatchArray.length > 0) {
         return this._renderPageContent(pageMatchArray[0]);
       }
-      const postMatchArray = posts.filter(post => post.slug === url.substr(1));
+      const postMatchArray = posts.filter(post => this.urlMatchesSlug(post.slug, url));
       if (posts
         && posts.length > 0
         && postMatchArray.length > 0) {
@@ -55,10 +66,10 @@ class Main extends Component {
 
   _renderPosts(isFetching, posts) {
     if (isFetching) {
-      return <Loader />;
+      return <Loader type="small" message="Fetching posts" />;
     }
     else if (posts && posts.length > 0) {
-      return <PostList posts={posts} onPostClick={this.props.onPostClick} />;
+      return <PostList posts={posts} />;
     }
     return <p>There are no posts right now.</p>;
   }
