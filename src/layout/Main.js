@@ -14,7 +14,7 @@ class Main extends Component {
     } = this.props;
 
     return (
-      <main className='main-section'>
+      <main className='main-container'>
         {this._renderPage(currentUrl, posts, pages)}
         {this._renderPosts(isFetching, posts)}
       </main>
