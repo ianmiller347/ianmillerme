@@ -5,6 +5,17 @@ import Loader from '../components/Loader';
 import { SITE_TITLE } from '../constants';
  
 class Main extends Component {
+  // tests if current URL matches a slug
+  // params: url (string), slug (string)
+  // returns bool
+  urlMatchesSlug(slug, url) {
+    // strings can be equal
+    // or equal without the slashes. Let's remove those
+    const slugNoSlashes = slug.replace(/\//g, '');
+    const urlNoSlashes = url.replace(/\//g, '');
+    return (slugNoSlashes === urlNoSlashes);
+  }
+
   render() {
     const {
       posts,
@@ -19,17 +30,6 @@ class Main extends Component {
         {this._renderPosts(isFetching, posts)}
       </main>
     );
-  }
-
-  // tests if current URL matches a slug
-  // params: url (string), slug (string)
-  // returns bool
-  urlMatchesSlug(slug, url) {
-    // strings can be equal
-    // or equal without the slashes. Let's remove those
-    const slugNoSlashes = slug.replace(/\//g, '');
-    const urlNoSlashes = url.replace(/\//g, '');
-    return (slugNoSlashes === urlNoSlashes);
   }
 
   _renderPageContent(page) {
