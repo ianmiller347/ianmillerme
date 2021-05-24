@@ -1,21 +1,14 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import Navigation from './Navigation';
  
-class Sidebar extends Component {
-  render() {
-    const { pages } = this.props;
-
-    return (
-      <aside className='sidebar padding'>
-        <Navigation pages={pages} />
-      </aside>
-    );
-  }
-}
-
-Sidebar.propTypes = {
-  pages: PropTypes.array.isRequired,
+const Sidebar = () => {
+  const pages = useSelector((state) => state.pages?.items);
+  return (
+    <aside className='sidebar padding'>
+      <Navigation pages={pages} />
+    </aside>
+  );
 };
 
 export default Sidebar;
