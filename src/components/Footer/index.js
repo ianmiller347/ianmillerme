@@ -1,6 +1,6 @@
 import React from 'react';
 import FeatherIcon from 'feather-icons-react';
-import '../styles/Footer.css';
+import './style.scss';
 
 const Footer = () => (
   <footer className='app-footer'>
@@ -61,7 +61,7 @@ const Footer = () => (
         <FeatherIcon icon='twitter' />
       </a>
     </div>
-    <p className='copyright small'><small>&copy; 2018 Ian J. Miller</small></p>
+    <p className='copyright small'><small>&copy; 2021 Ian J. Miller</small></p>
   </footer>
 );
  

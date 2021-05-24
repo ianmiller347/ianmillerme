@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PostListItem from './PostListItem';
-import '../styles/Post.css';
+import './style.scss';
  
 const PostList = ({ posts }) => (
   <div className='post-list-container'>
