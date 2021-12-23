@@ -7,14 +7,14 @@ const Footer = () => (
     <p><em>Made with:&nbsp;
       <a
         href='https://reactjs.org/'
-        title='React JS'
+        title='React'
         target='_blank'
         rel='noopener noreferrer'>
         React
       </a>,&nbsp;
       <a
         href='https://redux.js.org/'
-        title='Redux JS'
+        title='Redux'
         target='_blank'
         rel='noopener noreferrer'>
         Redux

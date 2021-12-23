@@ -1,13 +1,9 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import Page from '../components/Page';
- 
+
 const AppRoutes = () => {
   const pages = useSelector((state) => state.pages?.items);
   const isFetchingPages = useSelector((state) => state.pages?.isFetching);
@@ -35,10 +31,7 @@ const AppRoutes = () => {
           <Page />
         </Route>
         {pagesAndPosts.map((page) => (
-          <Route
-            key={page.slug}
-            path={`/${page.slug}/`}
-          >
+          <Route key={page.slug} path={`/${page.slug}/`}>
             <Page />
           </Route>
         ))}
