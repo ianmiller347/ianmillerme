@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { SITE_TITLE } from '../../constants';
+import './PageContent.scss';
 
 // tests if current URL matches a slug
 // params: url (string), slug (string)
@@ -11,7 +12,11 @@ const urlMatchesSlug = (slug, url) => {
   // or equal without the slashes. Let's remove those
   const slugNoSlashes = slug.replace(/\//g, '');
   const urlNoSlashes = url.replace(/\//g, '');
-  return (slugNoSlashes === urlNoSlashes);
+  // special home boy
+  if (slugNoSlashes === 'home' && url === '/') {
+    return true;
+  }
+  return slugNoSlashes === urlNoSlashes;
 };
 
 const PageContent = () => {

@@ -1,0 +1,13 @@
+.page-content {
+  opacity: 1;
+  animation: fadeIn .25s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,27 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
- 
 const Navigation = ({ pages }) => {
   if (pages?.length > 0) {
-    const pageLinks = pages.map(page => (
-      <li key={page.id}>
-        <NavLink
-          to={`/${page.slug}`}
-          title={page.title.rendered}>
-          {page.title.rendered}
-        </NavLink>
-      </li>
-    ));
+    const pageLinks = pages
+      .filter((page) => page.slug !== 'home')
+      .map((page) => (
+        <li key={page.id}>
+          <NavLink to={`/${page.slug}`} title={page.title.rendered}>
+            {page.title.rendered}
+          </NavLink>
+        </li>
+      ));
 
     return (
-      <nav className='nav-container'>
-        <ul className='nav-list'>
+      <nav className="nav-container">
+        <ul className="nav-list">
           <li>
-            <NavLink
-              to='/'
-              title='Home'
-              exact>
+            <NavLink to="/" title="Home" exact>
               Home
             </NavLink>
           </li>
@@ -34,7 +30,7 @@ const Navigation = ({ pages }) => {
 };
 
 Navigation.propTypes = {
-  pages: PropTypes.array.isRequired
+  pages: PropTypes.array.isRequired,
 };
 
 export default Navigation;
