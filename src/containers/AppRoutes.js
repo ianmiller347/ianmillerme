@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import Page from '../components/Page';
@@ -7,7 +7,6 @@ import Page from '../components/Page';
 const AppRoutes = () => {
   const pages = useSelector((state) => state.pages?.items);
   const isFetchingPages = useSelector((state) => state.pages?.isFetching);
-  const posts = useSelector((state) => state.posts?.items ?? []);
   const isFetchingPosts = useSelector((state) => state.posts?.isFetching);
 
   if (isFetchingPages) {
@@ -22,20 +21,10 @@ const AppRoutes = () => {
     return null;
   }
 
-  const pagesAndPosts = pages?.length ? pages.concat(posts) : [];
-
+  // Single Page mount — tab changes update content in place instead of remounting the sheet
   return (
     <Router>
-      <Switch>
-        <Route exact path="/">
-          <Page />
-        </Route>
-        {pagesAndPosts.map((page) => (
-          <Route key={page.slug} path={`/${page.slug}/`}>
-            <Page />
-          </Route>
-        ))}
-      </Switch>
+      <Page />
     </Router>
   );
 };

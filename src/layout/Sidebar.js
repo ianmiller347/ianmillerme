@@ -5,7 +5,7 @@ import Navigation from './Navigation';
 const Sidebar = () => {
   const pages = useSelector((state) => state.pages?.items);
   return (
-    <aside className='sidebar padding'>
+    <aside className="sidebar">
       <Navigation pages={pages} />
     </aside>
   );

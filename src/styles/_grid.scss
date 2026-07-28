@@ -3,10 +3,14 @@
   grid-gap: 1rem;
 
   &--has-sidebar {
-    grid-template-columns: 1fr 3fr;
+    // No gap — tabs tuck under / bleed into the page edge
+    grid-gap: 0;
+    grid-template-columns: minmax(6.75rem, 8.5rem) minmax(0, 1fr);
+    align-items: start;
 
     @media all and (max-width: 767px) {
-      grid-template-columns: repeat(1, 1fr);
+      grid-gap: 0;
+      grid-template-columns: 1fr;
     }
   }
 }

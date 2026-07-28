@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useLocation } from 'react-router';
 import { SITE_TITLE } from '../../constants';
 import './PageContent.scss';
 
@@ -24,8 +24,9 @@ const PageContent = () => {
   const posts = useSelector((state) => state.posts?.items ?? []);
 
   let page = null;
-  const history = useHistory();
-  const currentUrl = history.location.pathname;
+  // useLocation re-renders on nav; useHistory alone does not
+  const { pathname: currentUrl } = useLocation();
+
   const matchingPage = pages?.find((page) =>
     urlMatchesSlug(page.slug, currentUrl)
   );
@@ -45,8 +46,14 @@ const PageContent = () => {
     }
   }, [page]);
 
+  // Keep the paper sheet in place while content resolves (avoids layout flash on tab change)
   if (!page) {
-    return null;
+    return (
+      <div
+        className="page-content page-content--placeholder"
+        aria-hidden="true"
+      />
+    );
   }
 
   return (
@@ -54,6 +61,7 @@ const PageContent = () => {
       <h1>{page.title.rendered}</h1>
       <div
         className="page-content__body"
+        key={currentUrl}
         dangerouslySetInnerHTML={{ __html: page.content.rendered }}
       />
     </div>

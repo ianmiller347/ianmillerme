@@ -1,32 +1,140 @@
+$tab-opacity: 0.2;
+
+$tab-colors: (
+  1: rgba(255, 168, 188, $tab-opacity),
+  // pink
+  2: rgba(196, 168, 255, $tab-opacity),
+  // lavender
+  3: rgba(140, 210, 255, $tab-opacity),
+  // sky
+  4: rgba(168, 230, 160, $tab-opacity),
+  // mint
+  5: rgba(255, 228, 130, $tab-opacity),
+  // butter
+  6: rgba(255, 190, 140, $tab-opacity), // peach
+);
+
+.sidebar {
+  position: relative;
+  padding: 1rem 0 1rem 0.75rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.nav-container {
+  width: 100%;
+}
+
 .nav-list {
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 
-  li {
+  &__item {
     list-style: none;
     padding: 0;
+    margin: 0;
 
-    a {
+    @for $i from 1 through 6 {
+      &:nth-child(#{$i}) .nav-list__item__link:not(.active) {
+        background-color: map-get($tab-colors, $i);
+      }
+    }
+
+    &__link {
       display: block;
-      padding: 1rem;
+      position: relative;
+      z-index: 1;
+      padding: 0.85rem 0.85rem 0.85rem 1rem;
+      margin-bottom: 0.4rem;
+      // Tuck under the page — only the sticky "ear" stays visible
+      margin-right: -2.5rem;
+      padding-right: calc(0.85rem + 2.5rem);
       text-decoration: none;
-      transition: all .25s;
-      color: black;
-      background-color: #fefefe;
-      border-radius: 3px;
-      box-shadow: 2px 4px 3px #ccc;
-      margin-bottom: .25rem;
+      text-align: left;
+      color: #2a2a2a;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      border-radius: 3px 0 0 3px;
+      box-shadow: -2px 2px 4px rgba(80, 80, 80, 0.16);
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease,
+        filter 0.2s ease;
+      // Sit behind the page
+      transform: translateX(-0.25rem);
 
-      &:hover,
-      &.active {
-        box-shadow: 0 1px 2px #ccc;
-        color: $color-gray;
-        background-color: $color-gray--lighter;
+      &:hover:not(.active) {
+        color: #2a2a2a;
+        transform: translateX(0);
+        box-shadow: -3px 3px 6px rgba(80, 80, 80, 0.22);
+        filter: brightness(1.05);
       }
 
+      // Keyboard-only focus ring — mouse clicks focus the link but skip the indicator
       &:focus {
-        box-shadow: 0 0 1px #ccc;
-        background-color: darken($color-gray--lighter, 5%);
+        outline: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba(96, 19, 144, 0.35);
+        outline-offset: 2px;
+      }
+
+      // Selected tab = continuous with the page surface
+      &.active {
+        z-index: 3;
+        color: #111;
+        background-color: #fefefe;
+        transform: none;
+        // Overlap the page edge so the join reads as one sheet of paper
+        margin-right: -12px;
+        padding-right: 2rem;
+        border-radius: 3px 0 0 3px;
+        // Left-only shadow — negative spread keeps blur from drawing a seam on the page
+        box-shadow: -3px 2px 5px -3px rgba(80, 80, 80, 0.3);
+        filter: none;
+      }
+    }
+  }
+}
+
+@media all and (max-width: 767px) {
+  .sidebar {
+    padding: 1rem 1rem 0;
+    justify-content: flex-start;
+  }
+
+  .nav-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding-left: 0.25rem;
+
+    &__item {
+      &__link {
+        margin-right: 0;
+        margin-bottom: -2px;
+        padding-right: 1rem;
+        border-radius: 4px 4px 0 0;
+        transform: none;
+        box-shadow: 0 -1px 3px rgba(80, 80, 80, 0.12);
+
+        &:hover:not(.active) {
+          transform: translateY(-2px);
+        }
+
+        &.active {
+          margin-right: 0;
+          margin-bottom: -2px;
+          z-index: 3;
+          box-shadow: 0 -2px 3px rgba(80, 80, 80, 0.15);
+        }
       }
     }
   }

@@ -7,7 +7,7 @@ ul.post-list {
   padding: 0;
 }
 
-li.post-list-item {
+.post-list-item {
   margin: 1rem;
   padding: 2rem;
   list-style: none;
@@ -18,12 +18,26 @@ li.post-list-item {
 }
 
 .page-content {
-  @extend li.post-list-item;
+  @extend .post-list-item;
 
+  position: relative;
+  z-index: 2;
   max-width: 100%;
+  // Sit flush against the tabs so the active one can merge in
+  margin-left: 0;
+  // Flush left edge so the active tab can merge into the page surface
+  border-radius: 0 3px 3px 3px;
+  // Keep depth on the outer edges; avoid left-edge shadow spill that draws a seam at the tabs
+  box-shadow: 5px 5px 10px -4px rgba(80, 80, 80, 0.22);
 
   p {
     max-width: 100%;
+  }
+
+  @media all and (max-width: 767px) {
+    border-radius: 0 0 3px 3px;
+    margin-top: 0;
+    margin-left: 1rem;
   }
 }
 

@@ -6,8 +6,12 @@ const Navigation = ({ pages }) => {
     const pageLinks = pages
       .filter((page) => page.slug !== 'home')
       .map((page) => (
-        <li key={page.id}>
-          <NavLink to={`/${page.slug}`} title={page.title.rendered}>
+        <li key={page.id} className="nav-list__item">
+          <NavLink
+            to={`/${page.slug}`}
+            title={page.title.rendered}
+            className="nav-list__item__link"
+          >
             {page.title.rendered}
           </NavLink>
         </li>
@@ -16,8 +20,8 @@ const Navigation = ({ pages }) => {
     return (
       <nav className="nav-container">
         <ul className="nav-list">
-          <li>
-            <NavLink to="/" title="Home" exact>
+          <li className="nav-list__item">
+            <NavLink to="/" title="Home" exact className="nav-list__item__link">
               Home
             </NavLink>
           </li>
